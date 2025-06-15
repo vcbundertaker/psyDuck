@@ -1,35 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>psyDuck</title>
+    <title>psyDuck - Projeto de Criptografia</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #f0f2f5;
-            color: #1a1a1a;
+        :root {
+            --primary-color: #2d3748;
+            --secondary-color: #4a5568;
+            --accent-color: #4299e1;
+            --background-color: #f7fafc;
+            --text-color: #1a202c;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .content {
             background: white;
-            padding: 20px;
+            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #2d3748;
-            margin-bottom: 20px;
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #3182ce;
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="container">
+            <h1>psyDuck</h1>
+            <p>Projeto de Criptografia Segura</p>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Welcome to psyDuck</h1>
-        <p>This is a deployed GitHub Pages site.</p>
+        <div class="content">
+            <h2>Sobre o Projeto</h2>
+            <p>O psyDuck é um projeto de criptografia que visa fornecer uma solução segura e fácil de usar para proteger suas informações. Utilizando algoritmos modernos e práticas de segurança recomendadas, garantimos a proteção dos seus dados.</p>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Segurança</h3>
+                    <p>Implementação de algoritmos de criptografia robustos e atualizados.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Simplicidade</h3>
+                    <p>Interface intuitiva e fácil de usar, sem comprometer a segurança.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Confiabilidade</h3>
+                    <p>Testes rigorosos e atualizações constantes para garantir a qualidade.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="https://github.com/vcbundertaker/psyDuck" class="cta-button">Ver no GitHub</a>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 psyDuck. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html> 
