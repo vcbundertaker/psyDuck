@@ -36,6 +36,32 @@
             margin-bottom: 2rem;
         }
 
+        nav.tabs {
+            margin-top: 1rem;
+        }
+
+        nav.tabs button {
+            background: var(--secondary-color);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        nav.tabs button.active {
+            background: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         h1 {
             margin: 0;
             font-size: 2.5rem;
@@ -96,11 +122,15 @@
         <div class="container">
             <h1>psyDuck</h1>
             <p>Projeto de Criptografia Segura</p>
+            <nav class="tabs">
+                <button data-tab="home" class="active">Início</button>
+                <button data-tab="verify">Verificação</button>
+            </nav>
         </div>
     </header>
 
     <div class="container">
-        <div class="content">
+        <div id="home" class="content tab-content active">
             <h2>Sobre o Projeto</h2>
             <p>O psyDuck é um projeto de criptografia que visa fornecer uma solução segura e fácil de usar para proteger suas informações. Utilizando algoritmos modernos e práticas de segurança recomendadas, garantimos a proteção dos seus dados.</p>
 
@@ -123,6 +153,14 @@
                 <a href="https://github.com/vcbundertaker/psyDuck" class="cta-button" target="_blank" rel="noopener noreferrer">Ver no GitHub</a>
             </div>
         </div>
+
+        <div id="verify" class="content tab-content">
+            <h2>Verificação</h2>
+            <textarea id="verify-input" rows="5" style="width:100%;" placeholder="Digite o texto aqui"></textarea>
+            <p>Texto seguro:</p>
+            <pre id="safe-output" style="background:#f7fafc;padding:1rem;border-radius:4px;"></pre>
+            <ul id="flags"></ul>
+        </div>
     </div>
 
     <footer>
@@ -130,5 +168,36 @@
             <p>&copy; 2024 psyDuck. Todos os direitos reservados.</p>
         </div>
     </footer>
+    <script type="module">
+        import { scanDanger } from './src/utils/scanDanger.js';
+
+        const tabs = document.querySelectorAll('nav.tabs button');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                contents.forEach(c => c.classList.toggle('active', c.id === btn.dataset.tab));
+                tabs.forEach(b => b.classList.toggle('active', b === btn));
+            });
+        });
+
+        const input = document.getElementById('verify-input');
+        const safeOut = document.getElementById('safe-output');
+        const flagsList = document.getElementById('flags');
+
+        if (input) {
+            input.addEventListener('input', () => {
+                const { safeText, flags } = scanDanger(input.value);
+                if (safeOut) safeOut.textContent = safeText;
+                if (flagsList) {
+                    flagsList.innerHTML = '';
+                    flags.forEach(f => {
+                        const li = document.createElement('li');
+                        li.textContent = `${f.type}: ${f.suggestion} (${f.start}-${f.end})`;
+                        flagsList.appendChild(li);
+                    });
+                }
+            });
+        }
+    </script>
 </body>
-</html> 
+</html>
