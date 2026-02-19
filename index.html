@@ -511,6 +511,10 @@
       const inCheck = isKingInCheck(state.board, state.turn);
       const hasMoves = hasAnyLegalMove(state, state.turn);
       state.gameOver = hasMoves ? null : (inCheck ? 'checkmate' : 'stalemate');
+      if (state.gameOver) {
+        state.selected = null;
+        state.legalMoves = [];
+      }
       let finalState = '';
       if (state.gameOver === 'checkmate') finalState = '<br><strong>Xeque-mate!</strong>';
       if (state.gameOver === 'stalemate') finalState = '<br><strong>Afogamento (stalemate).</strong>';
@@ -531,6 +535,7 @@
         turn: state.turn,
         enPassant: state.enPassant ? { ...state.enPassant } : null,
         moveLog: [...state.moveLog],
+        gameOver: state.gameOver,
       };
     }
 
@@ -539,6 +544,7 @@
       state.turn = snap.turn;
       state.enPassant = snap.enPassant ? { ...snap.enPassant } : null;
       state.moveLog = [...snap.moveLog];
+      state.gameOver = snap.gameOver ?? null;
       state.selected = null;
       state.legalMoves = [];
     }
