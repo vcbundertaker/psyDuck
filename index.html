@@ -1,134 +1,592 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>psyDuck - Projeto de Criptografia</title>
-    <style>
-        :root {
-            --primary-color: #2d3748;
-            --secondary-color: #4a5568;
-            --accent-color: #4299e1;
-            --background-color: #f7fafc;
-            --text-color: #1a202c;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tibia Chess 2D</title>
+  <style>
+    :root {
+      --bg: #11131a;
+      --panel: #1d2230;
+      --panel-2: #272e40;
+      --text: #e6ecff;
+      --muted: #98a3c7;
+      --move: rgba(100, 220, 160, 0.55);
+      --cap: rgba(255, 100, 100, 0.62);
+      --sel: rgba(255, 230, 140, 0.62);
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+    * { box-sizing: border-box; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+    body {
+      margin: 0;
+      font-family: "Courier New", monospace;
+      background: radial-gradient(circle at top, #20263a, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
 
-        header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .layout {
+      width: min(1120px, 98vw);
+      display: grid;
+      grid-template-columns: minmax(580px, 1fr) 320px;
+      gap: 12px;
+    }
 
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: white;
-        }
+    .panel {
+      background: linear-gradient(180deg, var(--panel), #171b27);
+      border: 1px solid #323b52;
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.4);
+      padding: 12px;
+    }
 
-        .content {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    canvas {
+      width: 100%;
+      max-width: 760px;
+      height: auto;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
+      margin: 0 auto;
+      background: #0f1320;
+      border: 1px solid #38425f;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    .sub { margin: 0 0 10px; color: var(--muted); }
 
-        .feature-card {
-            background: var(--background-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
+    .status {
+      background: var(--panel-2);
+      border: 1px solid #39435f;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
 
-        .feature-card h3 {
-            color: var(--accent-color);
-            margin-top: 0;
-        }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            color: var(--secondary-color);
-        }
+    button {
+      border: 1px solid #4b587a;
+      background: #2d3650;
+      color: var(--text);
+      border-radius: 7px;
+      padding: 8px;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: var(--accent-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: background-color 0.3s;
-        }
+    button:hover { background: #3a4669; }
 
-        .cta-button:hover {
-            background: #3182ce;
-        }
-    </style>
+    .log {
+      height: 440px;
+      overflow: auto;
+      background: #151a27;
+      border: 1px solid #36405d;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .log-entry { padding: 3px 4px; border-bottom: 1px solid #293046; }
+    .log-entry:last-child { border-bottom: none; }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .log { height: 220px; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>psyDuck</h1>
-            <p>Projeto de Criptografia Segura</p>
-        </div>
-    </header>
+  <main class="layout">
+    <section class="panel">
+      <h1>Tibia Chess 2D</h1>
+      <p class="sub">Xadrez isométrico retro no Canvas (offline-first).</p>
+      <canvas id="game" width="760" height="620" aria-label="Tabuleiro de xadrez"></canvas>
+    </section>
+    <aside class="panel">
+      <div class="status" id="status"></div>
+      <div class="controls">
+        <button id="undoBtn">Desfazer</button>
+        <button id="resetBtn">Reiniciar</button>
+        <button id="flipBtn">Virar</button>
+      </div>
+      <div class="log" id="log"></div>
+    </aside>
+  </main>
 
-    <div class="container">
-        <div class="content">
-            <h2>Sobre o Projeto</h2>
-            <p>O psyDuck é um projeto de criptografia que visa fornecer uma solução segura e fácil de usar para proteger suas informações. Utilizando algoritmos modernos e práticas de segurança recomendadas, garantimos a proteção dos seus dados.</p>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
 
-            <div class="features">
-                <div class="feature-card">
-                    <h3>Segurança</h3>
-                    <p>Implementação de algoritmos de criptografia robustos e atualizados.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Simplicidade</h3>
-                    <p>Interface intuitiva e fácil de usar, sem comprometer a segurança.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Confiabilidade</h3>
-                    <p>Testes rigorosos e atualizações constantes para garantir a qualidade.</p>
-                </div>
-            </div>
+    const tileW = 78;
+    const tileH = 40;
+    const origin = { x: canvas.width / 2, y: 100 };
 
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="https://github.com/vcbundertaker/psyDuck" class="cta-button" target="_blank" rel="noopener noreferrer">Ver no GitHub</a>
-            </div>
-        </div>
-    </div>
+    const typeToCol = { p: 0, n: 1, b: 2, r: 3, q: 4, k: 5 };
+    const pieceNames = { p: 'Peão', n: 'Cavalo', b: 'Bispo', r: 'Torre', q: 'Rainha', k: 'Rei' };
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 psyDuck. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    const sprite = new Image();
+    let spriteReady = false;
+    let spriteFailed = false;
+    const frameW = 32;
+    const frameH = 32;
+    sprite.onload = () => (spriteReady = true);
+    sprite.onerror = () => (spriteFailed = true);
+    sprite.src = 'assets/pieces.png';
+
+    function initialBoard() {
+      const back = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
+      const b = Array.from({ length: 8 }, () => Array(8).fill(null));
+      for (let x = 0; x < 8; x++) {
+        b[0][x] = { c: 'b', t: back[x], moved: false };
+        b[1][x] = { c: 'b', t: 'p', moved: false };
+        b[6][x] = { c: 'w', t: 'p', moved: false };
+        b[7][x] = { c: 'w', t: back[x], moved: false };
+      }
+      return b;
+    }
+
+    function makeGameState() {
+      return {
+        board: initialBoard(),
+        turn: 'w',
+        selected: null,
+        legalMoves: [],
+        enPassant: null,
+        history: [],
+        moveLog: [],
+        flipped: false,
+      };
+    }
+
+    let state = makeGameState();
+
+    function cloneStateLite(s) {
+      return {
+        board: s.board.map(row => row.map(p => (p ? { ...p } : null))),
+        turn: s.turn,
+        enPassant: s.enPassant ? { ...s.enPassant } : null,
+      };
+    }
+
+    function boardToScreen(x, y) {
+      const vx = state.flipped ? 7 - x : x;
+      const vy = state.flipped ? 7 - y : y;
+      return {
+        sx: origin.x + (vx - vy) * (tileW / 2),
+        sy: origin.y + (vx + vy) * (tileH / 2),
+      };
+    }
+
+    function screenToBoard(mx, my) {
+      let best = null;
+      let bestD = Infinity;
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          const { sx, sy } = boardToScreen(x, y);
+          const dx = mx - sx;
+          const dy = my - sy;
+          const inside = Math.abs(dx) / (tileW / 2) + Math.abs(dy) / (tileH / 2) <= 1;
+          if (!inside) continue;
+          const d = dx * dx + dy * dy;
+          if (d < bestD) {
+            bestD = d;
+            best = { x, y };
+          }
+        }
+      }
+      return best;
+    }
+
+    const inBounds = (x, y) => x >= 0 && y >= 0 && x < 8 && y < 8;
+
+    function isSquareAttacked(board, tx, ty, byColor) {
+      const dir = byColor === 'w' ? -1 : 1;
+      const pawnY = ty - dir;
+      for (const dx of [-1, 1]) {
+        const x = tx + dx;
+        if (inBounds(x, pawnY)) {
+          const p = board[pawnY][x];
+          if (p && p.c === byColor && p.t === 'p') return true;
+        }
+      }
+
+      const nD = [[1,2], [2,1], [-1,2], [-2,1], [1,-2], [2,-1], [-1,-2], [-2,-1]];
+      for (const [dx, dy] of nD) {
+        const x = tx + dx, y = ty + dy;
+        if (!inBounds(x, y)) continue;
+        const p = board[y][x];
+        if (p && p.c === byColor && p.t === 'n') return true;
+      }
+
+      const lines = [
+        [1,0],[-1,0],[0,1],[0,-1],
+        [1,1],[-1,1],[1,-1],[-1,-1],
+      ];
+      for (const [dx, dy] of lines) {
+        let x = tx + dx, y = ty + dy, step = 1;
+        while (inBounds(x, y)) {
+          const p = board[y][x];
+          if (p) {
+            if (p.c === byColor) {
+              if (step === 1 && p.t === 'k') return true;
+              if ((dx === 0 || dy === 0) && (p.t === 'r' || p.t === 'q')) return true;
+              if ((dx !== 0 && dy !== 0) && (p.t === 'b' || p.t === 'q')) return true;
+            }
+            break;
+          }
+          x += dx; y += dy; step++;
+        }
+      }
+      return false;
+    }
+
+    function findKing(board, color) {
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        const p = board[y][x];
+        if (p && p.c === color && p.t === 'k') return { x, y };
+      }
+      return null;
+    }
+
+    function isKingInCheck(board, color) {
+      const king = findKing(board, color);
+      if (!king) return false;
+      const opp = color === 'w' ? 'b' : 'w';
+      return isSquareAttacked(board, king.x, king.y, opp);
+    }
+
+    function generatePseudoMoves(s, x, y) {
+      const p = s.board[y][x];
+      if (!p) return [];
+      const moves = [];
+      const opp = p.c === 'w' ? 'b' : 'w';
+      const push = (tx, ty, opts = {}) => moves.push({ fx: x, fy: y, tx, ty, ...opts });
+
+      if (p.t === 'p') {
+        const dir = p.c === 'w' ? -1 : 1;
+        const start = p.c === 'w' ? 6 : 1;
+        const ny = y + dir;
+        if (inBounds(x, ny) && !s.board[ny][x]) {
+          push(x, ny);
+          const ny2 = y + dir * 2;
+          if (y === start && !s.board[ny2][x]) push(x, ny2, { doubleStep: true });
+        }
+        for (const dx of [-1, 1]) {
+          const tx = x + dx, ty = y + dir;
+          if (!inBounds(tx, ty)) continue;
+          const target = s.board[ty][tx];
+          if (target && target.c === opp) push(tx, ty, { capture: true });
+        }
+        if (s.enPassant) {
+          if (Math.abs(s.enPassant.x - x) === 1 && s.enPassant.y === y + dir) {
+            push(s.enPassant.x, s.enPassant.y, { enPassant: true, capture: true });
+          }
+        }
+      }
+
+      if (p.t === 'n') {
+        const d = [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+        for (const [dx, dy] of d) {
+          const tx = x + dx, ty = y + dy;
+          if (!inBounds(tx, ty)) continue;
+          const target = s.board[ty][tx];
+          if (!target || target.c !== p.c) push(tx, ty, { capture: !!target });
+        }
+      }
+
+      if (p.t === 'b' || p.t === 'r' || p.t === 'q') {
+        const dirs = [];
+        if (p.t !== 'b') dirs.push([1,0],[-1,0],[0,1],[0,-1]);
+        if (p.t !== 'r') dirs.push([1,1],[-1,1],[1,-1],[-1,-1]);
+        for (const [dx, dy] of dirs) {
+          let tx = x + dx, ty = y + dy;
+          while (inBounds(tx, ty)) {
+            const target = s.board[ty][tx];
+            if (!target) push(tx, ty);
+            else {
+              if (target.c !== p.c) push(tx, ty, { capture: true });
+              break;
+            }
+            tx += dx; ty += dy;
+          }
+        }
+      }
+
+      if (p.t === 'k') {
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          const tx = x + dx, ty = y + dy;
+          if (!inBounds(tx, ty)) continue;
+          const target = s.board[ty][tx];
+          if (!target || target.c !== p.c) push(tx, ty, { capture: !!target });
+        }
+        if (!p.moved && !isKingInCheck(s.board, p.c)) {
+          for (const side of ['king', 'queen']) {
+            const rookX = side === 'king' ? 7 : 0;
+            const rook = s.board[y][rookX];
+            if (!rook || rook.c !== p.c || rook.t !== 'r' || rook.moved) continue;
+            const between = side === 'king' ? [5,6] : [1,2,3];
+            if (between.some(cx => s.board[y][cx])) continue;
+            const pass = side === 'king' ? [5,6] : [3,2];
+            if (pass.some(cx => isSquareAttacked(s.board, cx, y, opp))) continue;
+            push(side === 'king' ? 6 : 2, y, { castle: side });
+          }
+        }
+      }
+      moves.sort((a, b) => (a.ty - b.ty) || (a.tx - b.tx));
+      return moves;
+    }
+
+    function applyMove(s, move) {
+      const board = s.board;
+      const piece = board[move.fy][move.fx];
+      const target = board[move.ty][move.tx];
+      const info = { piece, target, move };
+
+      board[move.fy][move.fx] = null;
+
+      if (move.enPassant) {
+        const capY = piece.c === 'w' ? move.ty + 1 : move.ty - 1;
+        info.enPassantCaptured = board[capY][move.tx];
+        board[capY][move.tx] = null;
+      }
+
+      const movedPiece = { ...piece, moved: true };
+      if (piece.t === 'p' && (move.ty === 0 || move.ty === 7)) {
+        movedPiece.t = 'q';
+        info.promoted = true;
+      }
+
+      board[move.ty][move.tx] = movedPiece;
+
+      if (move.castle) {
+        if (move.castle === 'king') {
+          const rook = board[move.ty][7];
+          board[move.ty][7] = null;
+          board[move.ty][5] = { ...rook, moved: true };
+        } else {
+          const rook = board[move.ty][0];
+          board[move.ty][0] = null;
+          board[move.ty][3] = { ...rook, moved: true };
+        }
+      }
+
+      s.enPassant = move.doubleStep ? { x: move.tx, y: (move.fy + move.ty) / 2 } : null;
+      s.turn = s.turn === 'w' ? 'b' : 'w';
+      return info;
+    }
+
+    function legalMovesFor(s, x, y) {
+      const p = s.board[y][x];
+      if (!p || p.c !== s.turn) return [];
+      const pseudo = generatePseudoMoves(s, x, y);
+      return pseudo.filter(m => {
+        const test = cloneStateLite(s);
+        applyMove(test, m);
+        return !isKingInCheck(test.board, p.c);
+      });
+    }
+
+    function hasAnyLegalMove(s, color) {
+      const test = { ...s, turn: color };
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        const p = s.board[y][x];
+        if (p && p.c === color && legalMovesFor(test, x, y).length) return true;
+      }
+      return false;
+    }
+
+    function coordName(x, y) {
+      return 'abcdefgh'[x] + (8 - y);
+    }
+
+    function logMove(info) {
+      const m = info.move;
+      const side = info.piece.c === 'w' ? 'Brancas' : 'Pretas';
+      let text = `${side}: ${pieceNames[info.piece.t]} ${coordName(m.fx, m.fy)}→${coordName(m.tx, m.ty)}`;
+      if (m.castle) text += m.castle === 'king' ? ' (roque curto)' : ' (roque longo)';
+      if (m.enPassant) text += ' (en passant)';
+      if (info.promoted) text += ' (=Rainha)';
+      if (info.target || info.enPassantCaptured) text += ' x';
+      state.moveLog.push(text);
+    }
+
+    function drawDiamond(sx, sy, fill, stroke) {
+      ctx.beginPath();
+      ctx.moveTo(sx, sy - tileH / 2);
+      ctx.lineTo(sx + tileW / 2, sy);
+      ctx.lineTo(sx, sy + tileH / 2);
+      ctx.lineTo(sx - tileW / 2, sy);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.stroke();
+    }
+
+    function drawPiece(piece, sx, sy) {
+      if (spriteReady) {
+        const col = typeToCol[piece.t];
+        const row = piece.c === 'w' ? 0 : 1;
+        const size = 52;
+        ctx.drawImage(sprite, col * frameW, row * frameH, frameW, frameH, sx - size / 2, sy - size + 8, size, size);
+        return;
+      }
+      ctx.fillStyle = piece.c === 'w' ? '#e8eeff' : '#202531';
+      ctx.strokeStyle = piece.c === 'w' ? '#adb9d8' : '#5f6a86';
+      ctx.beginPath();
+      ctx.arc(sx, sy - 16, 14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = piece.c === 'w' ? '#1d2435' : '#dfe6fa';
+      ctx.font = 'bold 15px monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(piece.t.toUpperCase(), sx, sy - 16);
+      if (spriteFailed) {
+        ctx.fillStyle = '#8894b8';
+        ctx.font = '11px monospace';
+        ctx.fillText('fallback', sx, sy + 12);
+      }
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const levels = [];
+      for (let i = 0; i <= 14; i++) levels.push([]);
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        levels[x + y].push({ x, y, p: state.board[y][x] });
+      }
+
+      for (const cells of levels) {
+        for (const cell of cells) {
+          const { x, y } = cell;
+          const { sx, sy } = boardToScreen(x, y);
+          const dark = (x + y) % 2;
+          const top = dark ? '#4c608a' : '#6f89c0';
+          const edge = dark ? '#314362' : '#4d6594';
+          drawDiamond(sx, sy, top, edge);
+
+          const isSel = state.selected && state.selected.x === x && state.selected.y === y;
+          if (isSel) drawDiamond(sx, sy, 'rgba(255, 232, 130, 0.55)', '#ffe273');
+
+          const move = state.legalMoves.find(m => m.tx === x && m.ty === y);
+          if (move) {
+            drawDiamond(sx, sy, move.capture ? 'rgba(255,100,100,0.58)' : 'rgba(110,235,160,0.52)', move.capture ? '#ff8b8b' : '#8ef2bb');
+          }
+        }
+      }
+
+      for (const cells of levels) {
+        for (const cell of cells) {
+          if (!cell.p) continue;
+          const { sx, sy } = boardToScreen(cell.x, cell.y);
+          drawPiece(cell.p, sx, sy);
+        }
+      }
+
+      updateStatus();
+      updateLog();
+    }
+
+    function updateStatus() {
+      const turnLabel = state.turn === 'w' ? 'Brancas' : 'Pretas';
+      const inCheck = isKingInCheck(state.board, state.turn);
+      const hasMoves = hasAnyLegalMove(state, state.turn);
+      let finalState = '';
+      if (!hasMoves) finalState = inCheck ? '<br><strong>Xeque-mate!</strong>' : '<br><strong>Afogamento (stalemate).</strong>';
+      document.getElementById('status').innerHTML =
+        `Turno: <strong>${turnLabel}</strong>${inCheck ? ' (em xeque)' : ''}${finalState}<br>` +
+        `Sprite: <strong>${spriteReady ? 'assets/pieces.png' : 'fallback vetorial'}</strong>`;
+    }
+
+    function updateLog() {
+      const log = document.getElementById('log');
+      log.innerHTML = state.moveLog.map((line, i) => `<div class="log-entry">${i + 1}. ${line}</div>`).join('');
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function snapshot() {
+      return {
+        board: state.board.map(row => row.map(p => (p ? { ...p } : null))),
+        turn: state.turn,
+        enPassant: state.enPassant ? { ...state.enPassant } : null,
+        moveLog: [...state.moveLog],
+      };
+    }
+
+    function restore(snap) {
+      state.board = snap.board.map(row => row.map(p => (p ? { ...p } : null)));
+      state.turn = snap.turn;
+      state.enPassant = snap.enPassant ? { ...snap.enPassant } : null;
+      state.moveLog = [...snap.moveLog];
+      state.selected = null;
+      state.legalMoves = [];
+    }
+
+    canvas.addEventListener('click', (ev) => {
+      const rect = canvas.getBoundingClientRect();
+      const bx = (ev.clientX - rect.left) * (canvas.width / rect.width);
+      const by = (ev.clientY - rect.top) * (canvas.height / rect.height);
+      const sq = screenToBoard(bx, by);
+      if (!sq) return;
+
+      const chosenMove = state.legalMoves.find(m => m.tx === sq.x && m.ty === sq.y);
+      if (state.selected && chosenMove) {
+        state.history.push(snapshot());
+        const info = applyMove(state, chosenMove);
+        logMove(info);
+        state.selected = null;
+        state.legalMoves = [];
+        render();
+        return;
+      }
+
+      const piece = state.board[sq.y][sq.x];
+      if (piece && piece.c === state.turn) {
+        state.selected = { x: sq.x, y: sq.y };
+        state.legalMoves = legalMovesFor(state, sq.x, sq.y);
+      } else {
+        state.selected = null;
+        state.legalMoves = [];
+      }
+      render();
+    });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      const prev = state.history.pop();
+      if (!prev) return;
+      restore(prev);
+      render();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state = makeGameState();
+      render();
+    });
+
+    document.getElementById('flipBtn').addEventListener('click', () => {
+      state.flipped = !state.flipped;
+      render();
+    });
+
+    render();
+  </script>
 </body>
-</html> 
+</html>
