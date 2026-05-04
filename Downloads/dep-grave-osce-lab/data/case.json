@@ -1,0 +1,22 @@
+{
+  "id": "dep-grave-falhas-reais",
+  "title": "Os pontos de falha reais que matam na desnutrição grave",
+  "simulationOnly": true,
+  "clinicalSafetyNotice": "Este material é educacional e não substitui protocolo institucional, avaliação médica, supervisão clínica ou diretrizes oficiais atualizadas. Não deve ser usado para diagnóstico, tratamento individual ou decisão clínica real sem equipe habilitada e contexto assistencial adequado.",
+  "targetLearner": [
+    "estudante de medicina",
+    "interno",
+    "residente",
+    "equipe multiprofissional em treinamento"
+  ],
+  "thesis": "Na desnutrição grave, o erro fatal muitas vezes não é não tratar, mas tratar a criança como se ela fosse metabolicamente normal.",
+  "failureChain": [
+    "território não detecta",
+    "clínica subestima",
+    "hospital maneja como criança normal",
+    "alta não sustenta recuperação",
+    "recaída ou morte"
+  ],
+  "osceStation": {"title": "Criança desnutrida grave não é metabolicamente normal", "caseSummary": "Criança de 18 meses, área ribeirinha vulnerável, emagrecimento progressivo, apatia, recusa alimentar, dieta pobre, diarreia recente, hipotermia e glicemia ainda não medida. Colega sugere leite integral, ferro e dieta forte.", "redFlags": ["apatia", "hipotermia", "possível hipoglicemia", "infecção sem febre possível", "dieta forte precoce", "ferro na fase aguda", "risco de síndrome de realimentação"], "mainQuestion": "Qual é a conduta mais segura na primeira fase do manejo?", "options": [{"id": "A", "text": "Iniciar leite integral, ferro e dieta hipercalórica imediatamente.", "correct": false, "criticalError": true, "feedback": "Erro crítico: dieta forte e ferro na fase aguda podem causar dano em criança metabolicamente frágil."}, {"id": "B", "text": "Medir glicemia, aquecer, investigar/tratar infecção conforme protocolo, hidratar com cautela e iniciar alimentação segura de estabilização.", "correct": true, "criticalError": false, "feedback": "Correto: primeiro estabiliza, depois reabilita."}, {"id": "C", "text": "Aguardar todos os exames laboratoriais antes de qualquer intervenção.", "correct": false, "criticalError": true, "feedback": "Erro crítico: atrasar estabilização pode agravar hipoglicemia, hipotermia e infecção oculta."}, {"id": "D", "text": "Fazer soro venoso rápido e iniciar dieta de recuperação imediatamente.", "correct": false, "criticalError": true, "feedback": "Erro crítico: hidratação agressiva e reabilitação precoce podem descompensar a criança."}], "replay": ["Dieta pobre por meses", "Perda ponderal não detectada cedo", "Chegada com apatia e hipotermia", "Colega propõe dieta forte e ferro", "Aluno corrige fluxo", "Estabilização antes de reabilitação", "Evita realimentação, sepse silenciosa e iatrogenia"]},
+  "astroVisual": {"center": "Desnutrição grave = baixa reserva metabólica", "orbits": ["território", "interpretação clínica", "manejo hospitalar", "pós-alta", "segurança do paciente"], "redFlags": ["apatia", "hipoglicemia", "hipotermia", "infecção sem febre", "dieta forte precoce", "ferro na fase aguda", "soro rápido", "alta sem ESF"], "footer": "Território falha → clínica subestima → hospital pode causar iatrogenia → alta sem rede gera recaída."}
+}

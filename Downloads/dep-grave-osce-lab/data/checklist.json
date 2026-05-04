@@ -1,0 +1,22 @@
+[
+  {"id": 1, "item": "A criança foi pesada?", "status": "nao"},
+  {"id": 2, "item": "A curva de crescimento foi analisada?", "status": "nao"},
+  {"id": 3, "item": "MUAC foi medido quando aplicável?", "status": "nao"},
+  {"id": 4, "item": "Edema bilateral foi pesquisado?", "status": "nao"},
+  {"id": 5, "item": "A alimentação foi avaliada com detalhes?", "status": "nao"},
+  {"id": 6, "item": "A vulnerabilidade social foi registrada?", "status": "nao"},
+  {"id": 7, "item": "A glicemia foi medida?", "status": "nao"},
+  {"id": 8, "item": "A temperatura foi avaliada?", "status": "nao"},
+  {"id": 9, "item": "A possibilidade de infecção oculta foi considerada?", "status": "nao"},
+  {"id": 10, "item": "A dieta inicial respeitou fase de estabilização?", "status": "nao"},
+  {"id": 11, "item": "Ferro foi evitado na fase aguda quando indicado pelo protocolo?", "status": "nao"},
+  {"id": 12, "item": "Hidratação foi cautelosa?", "status": "nao"},
+  {"id": 13, "item": "Eletrólitos foram monitorados conforme disponibilidade e protocolo?", "status": "nao"},
+  {"id": 14, "item": "A criança foi avaliada quanto a atraso do desenvolvimento?", "status": "nao"},
+  {"id": 15, "item": "A alta teve plano com Atenção Básica?", "status": "nao"},
+  {"id": 16, "item": "Houve comunicação com ESF/eSFR?", "status": "nao"},
+  {"id": 17, "item": "Houve estratégia de seguimento?", "status": "nao"},
+  {"id": 18, "item": "Houve plano alimentar realista?", "status": "nao"},
+  {"id": 19, "item": "Segurança alimentar foi avaliada?", "status": "nao"},
+  {"id": 20, "item": "Irmãos/família foram avaliados quanto a risco nutricional?", "status": "nao"}
+]
