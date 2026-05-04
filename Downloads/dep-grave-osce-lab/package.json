@@ -1,0 +1,13 @@
+{
+  "name": "dep-grave-osce-lab",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server . -p 5173",
+    "open": "start http://localhost:5173",
+    "validate": "node -e \"JSON.parse(require('fs').readFileSync('./data/case.json','utf8')); JSON.parse(require('fs').readFileSync('./data/failures.json','utf8')); JSON.parse(require('fs').readFileSync('./data/checklist.json','utf8')); console.log('JSON OK')\""
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

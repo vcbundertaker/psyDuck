@@ -1,0 +1,72 @@
+[
+  {
+    "layer": "detection",
+    "error": "Criança não é pesada e curva de crescimento não é analisada",
+    "mechanism": "Falha de vigilância nutricional e puericultura irregular",
+    "consequence": "Diagnóstico tardio e chegada ao hospital em estado metabólico crítico",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "A criança faltou consultas e não houve busca ativa",
+    "auditQuestion": "A criança foi pesada e a curva foi analisada?"
+  },
+  {
+    "layer": "clinical_reasoning",
+    "error": "Apatia interpretada como criança calma",
+    "mechanism": "Baixa reserva energética, hipoglicemia, hipotermia ou infecção oculta",
+    "consequence": "Subestimação da gravidade clínica",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "Criança apática e pouco reativa na triagem",
+    "auditQuestion": "A apatia foi reconhecida como sinal de risco?"
+  },
+  {
+    "layer": "hospital_management",
+    "error": "Iniciar dieta forte ou F-100 precocemente",
+    "mechanism": "Aumento abrupto de insulina com deslocamento intracelular de fósforo, potássio e magnésio",
+    "consequence": "Síndrome de realimentação, arritmia, fraqueza respiratória e insuficiência cardíaca",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "A criança está muito magra. Vamos começar dieta forte para recuperar logo.",
+    "auditQuestion": "A fase de estabilização foi respeitada antes da reabilitação?"
+  },
+  {
+    "layer": "hospital_management",
+    "error": "Administrar ferro na fase aguda instável",
+    "mechanism": "Ferro livre pode favorecer crescimento bacteriano e estresse oxidativo",
+    "consequence": "Piora de infecção oculta ou sepse",
+    "preventable": true,
+    "severity": "high",
+    "osceTrigger": "Mucosa hipocorada, iniciar ferro agora.",
+    "auditQuestion": "O ferro foi contextualizado conforme fase clínica e protocolo?"
+  },
+  {
+    "layer": "hospital_management",
+    "error": "Hidratação venosa agressiva sem choque real",
+    "mechanism": "Baixa reserva cardíaca, hipoalbuminemia e risco de sobrecarga hídrica",
+    "consequence": "Edema pulmonar e insuficiência cardíaca",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "Está desidratada, vamos fazer soro rápido.",
+    "auditQuestion": "A hidratação foi cautelosa e justificada?"
+  },
+  {
+    "layer": "hospital_management",
+    "error": "Não suspeitar de infecção porque não há febre",
+    "mechanism": "Imunossupressão reduz resposta febril e leucocitária",
+    "consequence": "Sepse silenciosa não reconhecida",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "Sem febre, então não parece infecção.",
+    "auditQuestion": "Infecção oculta foi considerada?"
+  },
+  {
+    "layer": "post_discharge",
+    "error": "Alta sem plano territorial com ESF",
+    "mechanism": "Hospital corrige fase aguda, mas território mantém risco alimentar e social",
+    "consequence": "Recaída, reinternação ou morte domiciliar",
+    "preventable": true,
+    "severity": "critical",
+    "osceTrigger": "Paciente melhorou peso, pode ir embora sem contrarreferência.",
+    "auditQuestion": "Houve comunicação com ESF/eSFR e plano de seguimento?"
+  }
+]
