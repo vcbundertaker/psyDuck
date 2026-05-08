@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TemplateOS RescueOps Ledger Entry",
+  "type": "object",
+  "required": [
+    "entryId",
+    "timestamp",
+    "actor",
+    "action",
+    "module",
+    "status"
+  ],
+  "properties": {
+    "entryId": {
+      "type": "string",
+      "description": "Identificador único do evento no ledger"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "gateway",
+        "psyDuck",
+        "Emergent",
+        "Translado",
+        "rescue"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "in_progress",
+        "completed",
+        "blocked",
+        "failed"
+      ]
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": "string" },
+        "branch": { "type": "string" },
+        "commit": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "policyName": "templateos-rescueops-allowed-actions",
+  "mode": "documentation-only",
+  "allowedActions": [
+    "read_repository",
+    "write_documentation",
+    "update_manifest",
+    "update_dashboard_static",
+    "append_ledger_records"
+  ],
+  "blockedActions": [
+    "destructive_file_delete",
+    "real_system_remediation",
+    "external_disk_write",
+    "live_network_intrusion"
+  ],
+  "notes": "Fase inicial sem integração executável real."
+}

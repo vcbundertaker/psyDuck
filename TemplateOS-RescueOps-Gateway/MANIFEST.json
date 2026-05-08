@@ -1,0 +1,24 @@
+{
+  "name": "templateos-rescueops-gateway",
+  "displayName": "TemplateOS RescueOps Gateway",
+  "version": "0.1.0",
+  "status": "scaffold",
+  "createdAt": "2026-05-08",
+  "description": "Scaffold documental para orquestração de RescueOps com TemplateOS, psyDuck, Emergent e Translado.",
+  "modules": [
+    "psyDuck",
+    "Emergent",
+    "Translado"
+  ],
+  "externalTools": [
+    "Kaspersky Rescue Disk"
+  ],
+  "lineage": {
+    "provider": "GitHub",
+    "strategy": "repository-lineage"
+  },
+  "dashboard": {
+    "type": "static-html",
+    "entrypoint": "07_dashboard/index.html"
+  }
+}
