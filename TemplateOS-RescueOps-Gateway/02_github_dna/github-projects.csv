@@ -1,0 +1,5 @@
+project_id,project_name,domain,owner,repository,status,notes
+P001,TemplateOS RescueOps Gateway,operations,templateos,templateos-rescueops-gateway,scaffold,Repositório base de documentação e governança
+P002,psyDuck,security,templateos,psyDuck,planned,Módulo de criptografia e landing
+P003,Emergent,ai-workflows,templateos,emergent,planned,Laboratório de prompts e workflows
+P004,Translado,migration,templateos,translado,planned,Migração e transformação de artefatos

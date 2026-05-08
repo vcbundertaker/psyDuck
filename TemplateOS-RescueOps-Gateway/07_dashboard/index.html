@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TemplateOS RescueOps Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #151d33;
+      --text: #e8ecf7;
+      --muted: #a9b3cf;
+      --ok: #3ddc97;
+      --warn: #ffd166;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px;
+    }
+    h1 { margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .muted { color: var(--muted); }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-left: 8px;
+      background: rgba(255, 209, 102, 0.2);
+      color: var(--warn);
+    }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <h1>TemplateOS RescueOps Gateway <span class="badge">Scaffold</span></h1>
+  <p class="muted">Dashboard estático inicial (sem dependências externas obrigatórias).</p>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Projeto</h2>
+      <p id="project">Carregando...</p>
+      <p class="muted" id="version"></p>
+      <p class="muted" id="updated"></p>
+    </section>
+
+    <section class="card">
+      <h2>Módulos</h2>
+      <ul id="modules"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Governança</h2>
+      <p id="governanceMode"></p>
+      <p id="allowed"></p>
+      <p id="blocked"></p>
+    </section>
+
+    <section class="card">
+      <h2>Ledger</h2>
+      <p id="entries"></p>
+      <p id="ledgerStatus"></p>
+    </section>
+  </div>
+
+  <script>
+    fetch('./mock-data.json')
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById('project').textContent = data.project;
+        document.getElementById('version').textContent = `Versão: ${data.version}`;
+        document.getElementById('updated').textContent = `Atualizado em: ${data.lastUpdated}`;
+
+        const modules = document.getElementById('modules');
+        data.modules.forEach((m) => {
+          const li = document.createElement('li');
+          li.textContent = `${m.name}: ${m.status} (health: ${m.health})`;
+          modules.appendChild(li);
+        });
+
+        document.getElementById('governanceMode').textContent = `Modo: ${data.governance.mode}`;
+        document.getElementById('allowed').textContent = `Ações permitidas: ${data.governance.allowedActions}`;
+        document.getElementById('blocked').textContent = `Ações bloqueadas: ${data.governance.blockedActions}`;
+
+        document.getElementById('entries').textContent = `Entradas no ledger: ${data.ledger.entries}`;
+        document.getElementById('ledgerStatus').textContent = `Estado: ${data.ledger.latestStatus}`;
+      })
+      .catch((error) => {
+        document.getElementById('project').textContent = 'Falha ao carregar mock-data.json';
+        document.getElementById('version').textContent = String(error);
+      });
+  </script>
+</body>
+</html>

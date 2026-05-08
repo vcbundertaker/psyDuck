@@ -1,0 +1,19 @@
+{
+  "project": "TemplateOS RescueOps Gateway",
+  "version": "0.1.0",
+  "lastUpdated": "2026-05-08T00:00:00Z",
+  "modules": [
+    { "name": "psyDuck", "status": "planned", "health": "unknown" },
+    { "name": "Emergent", "status": "planned", "health": "unknown" },
+    { "name": "Translado", "status": "planned", "health": "unknown" }
+  ],
+  "governance": {
+    "mode": "documentation-only",
+    "allowedActions": 5,
+    "blockedActions": 4
+  },
+  "ledger": {
+    "entries": 0,
+    "latestStatus": "empty"
+  }
+}
